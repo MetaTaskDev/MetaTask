@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Apple-inspired clean palette */
-  --background: 210 20% 98%;
+  /* Premium SaaS Palette (Linear/Apple inspired) */
+  --background: 210 20% 98%; /* slate-50 equivalent-ish */
   --foreground: 222 47% 11%;
   
-  --primary: 215 100% 50%;
+  --primary: 221 83% 53%; /* Vivid Blue */
   --primary-foreground: 210 40% 98%;
   
   --secondary: 210 40% 96%;
@@ -26,78 +26,58 @@
 
   --border: 214 32% 91%;
   --input: 214 32% 91%;
-  --ring: 215 100% 50%;
+  --ring: 221 83% 53%;
   
-  --radius: 1rem;
-  
-  /* Glassmorphism variables */
-  --glass-bg: 0 0% 100%;
-  --glass-border: 0 0% 100%;
+  --radius: 1.5rem; /* rounded-3xl default */
 }
 
 .dark {
   --background: 222 47% 5%;
   --foreground: 210 40% 98%;
   
-  --primary: 215 100% 50%;
+  /* Dark mode adjustments if needed */
+  --primary: 217 91% 60%;
   --primary-foreground: 222 47% 11%;
-  
-  --secondary: 217 32% 17%;
-  --secondary-foreground: 210 40% 98%;
-  
-  --muted: 217 32% 17%;
-  --muted-foreground: 215 20% 65%;
-  
-  --accent: 217 32% 17%;
-  --accent-foreground: 210 40% 98%;
-  
-  --destructive: 0 62% 30%;
-  --destructive-foreground: 210 40% 98%;
-  
-  --border: 217 32% 17%;
-  --input: 217 32% 17%;
-  --ring: 224 76% 48%;
-
-  --glass-bg: 222 47% 5%;
-  --glass-border: 222 47% 15%;
 }
 
 @layer base {
   body {
-    @apply bg-background text-foreground antialiased font-sans;
-    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+    @apply bg-slate-50 text-slate-900 antialiased font-sans;
+    font-family: 'Plus Jakarta Sans', sans-serif;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply tracking-tight font-semibold;
+    @apply tracking-tight font-semibold text-slate-900;
   }
 }
 
 @layer components {
+  /* Clean Card Style - White, Soft Shadow, No Glassmorphism Overkill */
+  .premium-card {
+    @apply bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow duration-300;
+  }
+  
   .glass-card {
-    @apply bg-white/70 dark:bg-black/40 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-xl shadow-black/5;
+    /* Legacy support or repurposed as premium card */
+    @apply bg-white rounded-3xl border border-slate-100 shadow-sm;
   }
   
   .glass-button {
-    @apply bg-white/50 hover:bg-white/80 dark:bg-white/10 dark:hover:bg-white/20 backdrop-blur-md transition-all duration-300;
-  }
-
-  .text-balance {
-    text-wrap: balance;
+    @apply bg-white hover:bg-slate-50 border border-slate-200 shadow-sm text-slate-700 transition-all duration-300;
   }
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.2);
-  border-radius: 4px;
+  background: #cbd5e1; /* slate-300 */
+  border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.4);
+  background: #94a3b8; /* slate-400 */
 }

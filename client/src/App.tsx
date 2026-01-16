@@ -11,13 +11,15 @@ import Auth from "@/pages/Auth";
 import Dashboard from "@/pages/Dashboard";
 import Assessment from "@/pages/Assessment";
 
+import MainLayout from "@/components/MainLayout";
+
 function ProtectedRoute({ component: Component }: { component: React.ComponentType }) {
   const { user, isLoading } = useAuth();
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
       </div>
     );
   }
@@ -26,7 +28,11 @@ function ProtectedRoute({ component: Component }: { component: React.ComponentTy
     return <Redirect to="/auth" />;
   }
 
-  return <Component />;
+  return (
+    <MainLayout>
+      <Component />
+    </MainLayout>
+  );
 }
 
 function Router() {

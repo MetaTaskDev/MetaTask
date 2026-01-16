@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { useCurrentTrack, useTodayProgress, useToggleProgress } from "@/hooks/use-tracks";
 import { GlassCard } from "@/components/GlassCard";
@@ -9,6 +9,19 @@ import { Check, Lock, Loader2, Trophy, Flame } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "wouter";
 import confetti from "canvas-confetti";
+
+const ConfettiEffect = memo(({ completionPercentage }: { completionPercentage: number }) => {
+  useEffect(() => {
+    if (completionPercentage === 100) {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+  }, [completionPercentage]);
+  return null;
+});
 
 export default function Dashboard() {
   const { user, isLoading: isAuthLoading } = useAuth();
@@ -33,7 +46,7 @@ export default function Dashboard() {
   }
 
   // Calculate completion
-  const allTasks = track.pillars.flatMap(p => p.tasks);
+  const allTasks = track.pillars.flatMap((p: any) => p.tasks);
   const completedTaskIds = progress?.map((p: any) => p.taskId) || [];
   const completedCount = completedTaskIds.length;
   const totalCount = allTasks.length;
@@ -42,24 +55,9 @@ export default function Dashboard() {
   // Calculate day of year (out of 365) - simplified
   const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
 
-  // Confetti effect on 100% completion
-  useEffect(() => {
-    if (completionPercentage === 100) {
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-    }
-  }, [completionPercentage]);
-
-  const handleToggle = (taskId: number) => {
-    const today = format(new Date(), "yyyy-MM-dd");
-    toggleProgress.mutate({ taskId, date: today });
-  };
-
   return (
     <div className="min-h-screen bg-background pb-20">
+      <ConfettiEffect completionPercentage={completionPercentage} />
       {/* Header Section */}
       <div className="relative bg-gradient-to-b from-primary/10 to-transparent pt-12 pb-20 px-6">
         <div className="max-w-5xl mx-auto">
